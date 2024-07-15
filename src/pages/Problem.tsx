@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProblemHeader from "../components/headers/ProblemHeader";
-
+import Editor from "../components/Editor";
+import SelectBox from "../components/SelectBox";
+import { programmingLanguage } from "../utilities/constansts";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
   const dividerRef = useRef<HTMLDivElement>(null);
+  const [selectedLang, setSelectedLang] = useState("c_cpp");
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (!isDragging) return;
@@ -21,7 +24,7 @@ const Problem = () => {
 
     const handleMouseUp = () => {
       if (dividerRef.current) {
-        dividerRef.current.classList.remove("bg-blue-500");
+        dividerRef.current.classList.remove("bg-blue-700");
       }
 
       setIsDragging(false);
@@ -37,13 +40,15 @@ const Problem = () => {
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging]);
-  console.log(currentWidth);
 
   function mouseDown() {
     setIsDragging(true);
     if (dividerRef.current) {
-      dividerRef.current.classList.add("bg-blue-500");
+      dividerRef.current.classList.add("bg-blue-700");
     }
+  }
+  function handleChangeLanguagesOption(lang: string) {
+    setSelectedLang(lang);
   }
   return (
     <div>
@@ -65,7 +70,16 @@ const Problem = () => {
           style={{ width: `${100 - currentWidth}%` }}
           className="border rounded"
         >
-          editor
+          <div className="h-14 border-b-2  border-gray-700">
+            <div className="p-1">
+              <SelectBox
+                programmingLanguage={programmingLanguage}
+                handleChangeLanguagesOption={handleChangeLanguagesOption}
+              />
+            </div>
+          </div>
+
+          <Editor selectedLang={selectedLang} />
         </div>
       </div>
     </div>
