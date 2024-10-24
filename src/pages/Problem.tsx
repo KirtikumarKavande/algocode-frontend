@@ -56,19 +56,19 @@ const Problem = () => {
       <ProblemHeader />
       <div className="w-full flex p-1 overflow-hidden">
         <div
-          style={{ width: `${currentWidth}%` }}
+          style={{ width: `${currentWidth}%`,height:"100vh", overflow:"scroll" }}
           className="border rounded max-w-full overflow-auto px-2"
         >
           <ReactMarkDown/>
         </div>
         <div
           ref={dividerRef}
-          className="divider w-1 min-h-screen bg-white cursor-ew-resize flex justify-center"
+          className="divider w-1 h-[95vh]  bg-white cursor-ew-resize flex justify-center"
           onMouseDown={mouseDown}
         />
 
         <div
-          style={{ width: `${100 - currentWidth}%` }}
+          style={{ width: `${100 - currentWidth}%`,height:"100vh" }}
           className="border rounded"
         >
           <div className="h-14 border-b-2  border-gray-700">
