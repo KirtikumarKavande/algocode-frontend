@@ -3,6 +3,7 @@ import ProblemHeader from "../components/headers/ProblemHeader";
 import Editor from "../components/Editor";
 import SelectBox from "../components/SelectBox";
 import { programmingLanguage } from "../utilities/constansts";
+import ReactMarkDown from "../components/MyMarkDown";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
@@ -56,13 +57,13 @@ const Problem = () => {
       <div className="w-full flex p-1 overflow-hidden">
         <div
           style={{ width: `${currentWidth}%` }}
-          className="border rounded max-w-full overflow-auto"
+          className="border rounded max-w-full overflow-auto px-2"
         >
-          problem
+          <ReactMarkDown/>
         </div>
         <div
           ref={dividerRef}
-          className="divider w-1 min-h-screen bg-white cursor-ew-resize"
+          className="divider w-1 min-h-screen bg-white cursor-ew-resize flex justify-center"
           onMouseDown={mouseDown}
         />
 
