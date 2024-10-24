@@ -4,10 +4,12 @@ import Editor from "../components/Editor";
 import SelectBox from "../components/SelectBox";
 import { programmingLanguage } from "../utilities/constansts";
 import ReactMarkDown from "../components/MyMarkDown";
+import MarkdownButtons from "./MarkdownButtons";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
   const dividerRef = useRef<HTMLDivElement>(null);
+  const [showButton,setShowButton] = useState("desc")
   const [selectedLang, setSelectedLang] = useState("c_cpp");
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -54,12 +56,23 @@ const Problem = () => {
   return (
     <div>
       <ProblemHeader />
-      <div className="w-full flex p-1 overflow-hidden">
+      <div className="w-full flex overflow-hidden p-1">
         <div
-          style={{ width: `${currentWidth}%`,height:"100vh", overflow:"scroll" }}
-          className="border rounded max-w-full overflow-auto px-2"
+          style={{
+            width: `${currentWidth}%`,
+            height: "100vh",
+            overflow: "scroll",
+          }}
+          className="border rounded max-w-full overflow-auto "
         >
-          <ReactMarkDown/>
+         <MarkdownButtons showButton={showButton} setShowButton={setShowButton}/>
+
+         
+          <div className="  px-2">
+          {
+            showButton === "desc" && <ReactMarkDown />
+          }
+          </div>
         </div>
         <div
           ref={dividerRef}
@@ -68,7 +81,7 @@ const Problem = () => {
         />
 
         <div
-          style={{ width: `${100 - currentWidth}%`,height:"100vh" }}
+          style={{ width: `${100 - currentWidth}%`, height: "100vh" }}
           className="border rounded"
         >
           <div className="h-14 border-b-2  border-gray-700">
