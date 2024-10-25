@@ -4,12 +4,14 @@ import Editor from "../components/Editor";
 import SelectBox from "../components/SelectBox";
 import { programmingLanguage } from "../utilities/constansts";
 import ReactMarkDown from "../components/MyMarkDown";
-import MarkdownButtons from "./MarkdownButtons";
+import ButtonList from "./ButtonList";
+import { leftPanelBtnList, rightPannelButtonList } from "./utilities/constants";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
   const dividerRef = useRef<HTMLDivElement>(null);
-  const [showButton,setShowButton] = useState("desc")
+  const [showLeftPanelBtn, setShowLeftPanelBtn] = useState("desc");
+  const [showRightPanelBtn, setShowRightPanelBtn] = useState("code");
   const [selectedLang, setSelectedLang] = useState("c_cpp");
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -65,13 +67,16 @@ const Problem = () => {
           }}
           className="border rounded max-w-full overflow-auto "
         >
-         <MarkdownButtons showButton={showButton} setShowButton={setShowButton}/>
+          <div className="border-b">
+            <ButtonList
+              showButton={showLeftPanelBtn}
+              setShowButton={setShowLeftPanelBtn}
+              btnArray={leftPanelBtnList}
+            />
+          </div>
 
-         
           <div className="  px-2">
-          {
-            showButton === "desc" && <ReactMarkDown />
-          }
+            {showLeftPanelBtn === "desc" && <ReactMarkDown />}
           </div>
         </div>
         <div
@@ -93,12 +98,19 @@ const Problem = () => {
             </div>
             <div className="text-3xl self-start">|</div>
             <div>
-              
+              <ButtonList
+                showButton={showRightPanelBtn}
+                setShowButton={setShowRightPanelBtn}
+                btnArray={rightPannelButtonList}
+              />
             </div>
           </div>
 
-
-          <Editor selectedLang={selectedLang} />
+          <div>
+            {showRightPanelBtn === "code" && (
+              <Editor selectedLang={selectedLang} />
+            )}
+          </div>
         </div>
       </div>
     </div>
