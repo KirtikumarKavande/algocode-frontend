@@ -4,15 +4,15 @@ export const programmingLanguage: { name: string; value: string }[] = [
     value: "c_cpp",
   },
   {
-    name: "JS",
+    name: "Javascript",
     value: "javascript",
   },
   {
-    name: "python",
+    name: "Python",
     value: "python",
   },
   {
-    name: "java",
+    name: "Java",
     value: "java",
   },
 ];
