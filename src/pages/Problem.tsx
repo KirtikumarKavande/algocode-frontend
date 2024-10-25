@@ -84,14 +84,19 @@ const Problem = () => {
           style={{ width: `${100 - currentWidth}%`, height: "100vh" }}
           className="border rounded"
         >
-          <div className="h-14 border-b-2  border-gray-700">
-            <div className="p-1">
+          <div className="h-12 border-b-2  border-gray-700 flex items-center">
+            <div className="px-3 ">
               <SelectBox
                 programmingLanguage={programmingLanguage}
                 handleChangeLanguagesOption={handleChangeLanguagesOption}
               />
             </div>
+            <div className="text-3xl self-start">|</div>
+            <div>
+              
+            </div>
           </div>
+
 
           <Editor selectedLang={selectedLang} />
         </div>

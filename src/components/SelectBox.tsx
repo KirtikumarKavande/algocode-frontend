@@ -10,20 +10,22 @@ const SelectBox = ({
   handleChangeLanguagesOption: (value: string) => void;
 }) => {
   return (
-    <select
-      className="select select-bordered"
-      onChange={(e) => handleChangeLanguagesOption(e.target.value)}
-    >
-      {programmingLanguage.map((lang) => (
-        <option
-          selected={lang.value === "c_cpp"}
-          key={lang.name}
-          value={lang.value}
-        >
-          {lang.name}
-        </option>
-      ))}
-    </select>
+    <div>
+      <select
+        className="select select-bordered select-xs h-8 max-w-xs"
+        onChange={(e) => handleChangeLanguagesOption(e.target.value)}
+      >
+        {programmingLanguage.map((lang) => (
+          <option
+            selected={lang.value === "c_cpp"}
+            key={lang.name}
+            value={lang.value}
+          >
+            {lang.name}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 

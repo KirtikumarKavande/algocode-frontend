@@ -35,7 +35,7 @@ const Editor = ({ selectedLang }: { selectedLang: string }) => {
         onChange={code}
         name="UNIQUE_ID_OF_DIV"
         editorProps={{ $blockScrolling: true }}
-        // height={"100vh"}
+        height={"100vh"}
         fontSize={16}
         enableBasicAutocompletion={true}
         enableSnippets={true}
