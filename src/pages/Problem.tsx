@@ -55,6 +55,10 @@ const Problem = () => {
   function handleChangeLanguagesOption(lang: string) {
     setSelectedLang(lang);
   }
+
+  function handleSubmitSubmission(){
+    console.log("submit")
+  }
   return (
     <div>
       <ProblemHeader />
@@ -97,12 +101,17 @@ const Problem = () => {
               />
             </div>
             <div className="text-3xl self-start">|</div>
-            <div>
-              <ButtonList
-                showButton={showRightPanelBtn}
-                setShowButton={setShowRightPanelBtn}
-                btnArray={rightPannelButtonList}
-              />
+            <div className="flex justify-between w-full items-center">
+              <div>
+                <ButtonList
+                  showButton={showRightPanelBtn}
+                  setShowButton={setShowRightPanelBtn}
+                  btnArray={rightPannelButtonList}
+                />
+              </div>
+              <div className="pr-4">
+                <button className="p-1 bg-green-500 text-white text-bold rounded" onClick={handleSubmitSubmission}>Submit</button>
+              </div>
             </div>
           </div>
 
