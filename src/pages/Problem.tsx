@@ -6,6 +6,7 @@ import { programmingLanguage } from "../utilities/constansts";
 import ReactMarkDown from "../components/MyMarkDown";
 import ButtonList from "./ButtonList";
 import { leftPanelBtnList, rightPannelButtonList } from "./utilities/constants";
+import socket from "../components/socket/socket";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
@@ -13,6 +14,7 @@ const Problem = () => {
   const [showLeftPanelBtn, setShowLeftPanelBtn] = useState("desc");
   const [showRightPanelBtn, setShowRightPanelBtn] = useState("code");
   const [selectedLang, setSelectedLang] = useState("c_cpp");
+
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (!isDragging) return;
@@ -57,7 +59,7 @@ const Problem = () => {
   }
 
   function handleSubmitSubmission(){
-    console.log("submit")
+    socket.emit("send_message", { message: "kirtikumar" });
   }
   return (
     <div>
