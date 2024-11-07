@@ -17,7 +17,7 @@ const SelectBox = ({
       >
         {programmingLanguage.map((lang) => (
           <option
-            selected={lang.value === "c_cpp"}
+            selected={localStorage.getItem("selectedLang")===lang.value ||lang.value === "c_cpp"}
             key={lang.name}
             value={lang.value}
           >

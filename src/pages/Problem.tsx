@@ -7,6 +7,7 @@ import ReactMarkDown from "../components/MyMarkDown";
 import ButtonList from "./ButtonList";
 import { leftPanelBtnList, rightPannelButtonList } from "./utilities/constants";
 import socket from "../components/socket/socket";
+import axios from "axios";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
@@ -14,6 +15,21 @@ const Problem = () => {
   const [showLeftPanelBtn, setShowLeftPanelBtn] = useState("desc");
   const [showRightPanelBtn, setShowRightPanelBtn] = useState("code");
   const [selectedLang, setSelectedLang] = useState("c_cpp");
+  const [code, setCode] = useState("");
+
+
+  useEffect(() => {
+      function testCaseResult(value:string) {
+     console.log("socket on frontend",value)
+    }
+
+    socket.on('payload', testCaseResult);
+
+    return () => {
+      
+      socket.off('payload', testCaseResult);
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -56,10 +72,26 @@ const Problem = () => {
   }
   function handleChangeLanguagesOption(lang: string) {
     setSelectedLang(lang);
+    localStorage.setItem("selectedLang", lang);
   }
 
-  function handleSubmitSubmission(){
-    socket.emit("send_message", { message: "kirtikumar" });
+  async function handleSubmitSubmission(){
+    socket.emit("redis-cache", { userId: "1" });
+    try {
+      console.log(code)
+      console.log(selectedLang)
+      const response = await axios.post("http://localhost:5000/api/v1/submissions/addsubmissions", {
+          code,
+          language:localStorage.getItem("selectedLang")||selectedLang,
+          userId: "1",
+          problemId: "661184c6a5f8943ad4d8c3c9"
+      });
+      console.log(response);
+      return response;
+  } catch(error) {
+      console.log(error);
+  }
+   
   }
   return (
     <div>
@@ -119,7 +151,7 @@ const Problem = () => {
 
           <div>
             {showRightPanelBtn === "code" && (
-              <Editor selectedLang={selectedLang} />
+              <Editor selectedLang={selectedLang} setCode={setCode}/>
             )}
           </div>
         </div>
