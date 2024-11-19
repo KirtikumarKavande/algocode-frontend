@@ -18,9 +18,11 @@ const Problem = () => {
   const [selectedLang, setSelectedLang] = useState("c_cpp");
   const [code, setCode] = useState("");
   const [testCaseResult,setTestCaseResult]=useState({}) 
+  const[isClickedOnSubmit,setIsClickedOnSubmit]=useState(false)
 
   useEffect(() => {
       function testCaseResult(value:object) {
+        setIsClickedOnSubmit(false)
         setTestCaseResult(value)
      console.log("socket on frontend",value)
     }
@@ -89,6 +91,8 @@ const Problem = () => {
           problemId: "661184c6a5f8943ad4d8c3c9"
       });
       console.log(response);
+      setIsClickedOnSubmit(true)
+      setShowRightPanelBtn("testCase")
       return response;
   } catch(error) {
       console.log(error);
@@ -157,7 +161,7 @@ const Problem = () => {
           </div>
           <div>
           {showRightPanelBtn === "testCase" && (
-              <TestCase testCaseResult={testCaseResult}/>
+              <TestCase testCaseResult={testCaseResult} isClickedOnSubmit={isClickedOnSubmit} />
             )}
           </div>
         </div>
