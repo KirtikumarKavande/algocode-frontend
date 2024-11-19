@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProblemHeader from "../components/headers/ProblemHeader";
 import Editor from "../components/Editor";
+import TestCase from "../components/TestCase";
 import SelectBox from "../components/SelectBox";
 import { programmingLanguage } from "../utilities/constansts";
 import ReactMarkDown from "../components/MyMarkDown";
@@ -16,10 +17,11 @@ const Problem = () => {
   const [showRightPanelBtn, setShowRightPanelBtn] = useState("code");
   const [selectedLang, setSelectedLang] = useState("c_cpp");
   const [code, setCode] = useState("");
-
+  const [testCaseResult,setTestCaseResult]=useState({}) 
 
   useEffect(() => {
-      function testCaseResult(value:string) {
+      function testCaseResult(value:object) {
+        setTestCaseResult(value)
      console.log("socket on frontend",value)
     }
 
@@ -82,7 +84,7 @@ const Problem = () => {
       console.log(selectedLang)
       const response = await axios.post("http://localhost:5000/api/v1/submissions/addsubmissions", {
           code,
-          language:localStorage.getItem("selectedLang")||selectedLang,
+          language:selectedLang,
           userId: "1",
           problemId: "661184c6a5f8943ad4d8c3c9"
       });
@@ -124,7 +126,7 @@ const Problem = () => {
         />
 
         <div
-          style={{ width: `${100 - currentWidth}%`, height: "100vh" }}
+          style={{ width: `${100 - currentWidth}%`, height: "100vh", overflowY:"scroll" }}
           className="border rounded"
         >
           <div className="h-12 border-b-2  border-gray-700 flex items-center">
@@ -148,10 +150,14 @@ const Problem = () => {
               </div>
             </div>
           </div>
-
           <div>
             {showRightPanelBtn === "code" && (
               <Editor selectedLang={selectedLang} setCode={setCode}/>
+            )}
+          </div>
+          <div>
+          {showRightPanelBtn === "testCase" && (
+              <TestCase testCaseResult={testCaseResult}/>
             )}
           </div>
         </div>
