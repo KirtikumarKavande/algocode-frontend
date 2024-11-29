@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/dompurify": "^3.0.5",
+    "ace-builds": "^1.36.5",
     "axios": "^1.7.7",
     "dompurify": "^3.1.6",
     "lucide-react": "^0.460.0",

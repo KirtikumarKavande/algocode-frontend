@@ -11,14 +11,13 @@ import 'ace-builds/src-noconflict/ext-beautify';
 
 const Editor = ({ selectedLang,setCode }: { selectedLang: string, setCode: (value: string) => void }) => {
   function code(c: string) {
-    console.log("code I have wrote",c);
-
     setCode(c);
   }
 
   
 
   const onLoad = (editor:IAceEditor) => {
+
     editor.setOptions({
       enableBasicAutocompletion: true,  // Enable basic auto completion
       enableLiveAutocompletion: true,   // Enable live autocompletion
@@ -27,11 +26,13 @@ const Editor = ({ selectedLang,setCode }: { selectedLang: string, setCode: (valu
       tabSize: 2,
     });
   };
+  console.log("lang selected",selectedLang);
+
   return (
     <div>
       {" "}
       <AceEditor
-        mode={selectedLang}
+        mode={"c_cpp"}
         theme="monokai"
         width="100%"
         onChange={code}

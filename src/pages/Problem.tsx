@@ -15,7 +15,7 @@ const Problem = () => {
   const dividerRef = useRef<HTMLDivElement>(null);
   const [showLeftPanelBtn, setShowLeftPanelBtn] = useState("desc");
   const [showRightPanelBtn, setShowRightPanelBtn] = useState("code");
-  const [selectedLang, setSelectedLang] = useState("c_cpp");
+  const [selectedLang, setSelectedLang] = useState(localStorage.getItem("selectedLang")||"c_cpp"); 
   const [code, setCode] = useState("");
   const [testCaseResult,setTestCaseResult]=useState({}) 
   const[isClickedOnSubmit,setIsClickedOnSubmit]=useState(false)
@@ -71,13 +71,16 @@ const Problem = () => {
   function mouseDown() {
     setIsDragging(true);
     if (dividerRef.current) {
-      dividerRef.current.classList.add("bg-blue-700");
+      dividerRef.current.style.setProperty('background-color', 'blue', );
     }
   }
+ 
   function handleChangeLanguagesOption(lang: string) {
     setSelectedLang(lang);
     localStorage.setItem("selectedLang", lang);
   }
+
+
 
   async function handleSubmitSubmission(){
     socket.emit("redis-cache", { userId: "1" });
