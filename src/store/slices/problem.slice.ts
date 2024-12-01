@@ -40,7 +40,12 @@ export const fetchUsers = createAsyncThunk<Problems[], void, { rejectValue: stri
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    getSelectedProblemId: (state, action) => {
+      console.log(">>>>>>>>>",action.payload)
+      state.selectedProblemId=action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -57,5 +62,7 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const { getSelectedProblemId } = userSlice.actions;
 
 export default userSlice.reducer;

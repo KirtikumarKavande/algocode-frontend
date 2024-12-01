@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../store/store';
+import { getSelectedProblemId } from "../store/slices/problem.slice";
 interface Problem {
   _id: string;
   title: string;
@@ -9,7 +10,7 @@ interface Problem {
 const ProblemList = () => {
     const problems:any  = useSelector((store: RootState)=>store.allProblems.problems)
     const problemLinks=problems?.data
-
+    const dispatch=useDispatch()
     
       const difficultyChips:{ [key: string]: string } = {
         Easy: 'bg-green-100 text-green-800',
@@ -18,7 +19,8 @@ const ProblemList = () => {
       };
 
       function selectedProblem(id:string){
-        console.log("selected",id)
+        console.log("reached here")
+        dispatch(getSelectedProblemId(id)) 
 
       }
   return (
