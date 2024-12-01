@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/problem.slice';
+import problemReducer from './slices/problem.slice';
 
-const store = configureStore({
+const store:any = configureStore({
   reducer: {
-    user: userReducer,
+    allProblems: problemReducer,
   },
 });
 

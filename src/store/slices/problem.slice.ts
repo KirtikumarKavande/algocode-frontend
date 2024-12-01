@@ -7,16 +7,19 @@ interface Problems {
   email: string;
 }
 
-interface UserState {
+interface ProblemState {
   problems: Problems[] | null;
   loading: boolean;
   error: string | null;
+  selectedProblemId:string
+
 }
 
-const initialState: UserState = {
+const initialState: ProblemState = {
   problems: null,
   loading: false,
   error: null,
+  selectedProblemId:""
 };
 
 // Async thunk to fetch users
