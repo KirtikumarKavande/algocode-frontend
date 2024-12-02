@@ -1,14 +1,8 @@
 import DOMPurify from 'dompurify'
-import { useSelector } from 'react-redux'
+import useGetSelectedProblem from '../hooks/useGetSelectedProblem';
 
 const Article = () => {
-    const storeData:any = useSelector((store: any)=>store?.allProblems)
-    const selectedId=storeData?.selectedProblemId
-    const problemData=storeData?.problems?.data
-   let problem= problemData.find((problem: any) => problem._id === selectedId)
-        if(!problem){
-            problem=problemData[0]
-        }
+   const problem=useGetSelectedProblem()
    const sanitizedContent = DOMPurify.sanitize(problem && problem.article);
  
   return (
