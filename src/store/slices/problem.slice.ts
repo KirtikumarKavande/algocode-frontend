@@ -42,7 +42,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     getSelectedProblemId: (state, action) => {
-      console.log(">>>>>>>>>",action.payload)
       state.selectedProblemId=action.payload
     }
   },

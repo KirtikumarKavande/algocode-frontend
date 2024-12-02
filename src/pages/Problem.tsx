@@ -9,6 +9,7 @@ import ButtonList from "./ButtonList";
 import { leftPanelBtnList, rightPannelButtonList } from "./utilities/constants";
 import socket from "../components/socket/socket";
 import axios from "axios";
+import Article from "../components/Article";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
@@ -125,6 +126,10 @@ const Problem = () => {
           <div className="  px-2">
             {showLeftPanelBtn === "desc" && <ReactMarkDown />}
           </div>
+          <div className="px-2">
+            {showLeftPanelBtn === "article" && <Article />}
+          </div>
+
         </div>
         <div
           ref={dividerRef}
