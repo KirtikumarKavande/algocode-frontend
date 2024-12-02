@@ -30,3 +30,10 @@ export const rightPannelButtonList=[
     },
   
 ]
+
+export const languages = [
+    { name: "C++", code: "cpp" },
+    { name: "Java", code: "java" },
+    { name: "Python", code: "python" },
+    { name: "JavaScript", code: "javascript" },
+  ];
