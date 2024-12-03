@@ -168,7 +168,7 @@ const Problem = () => {
           </div>
           <div>
             {showRightPanelBtn === "code" && (
-              <Editor selectedLang={selectedLang} setCode={setCode}/>
+              <Editor selectedLang={selectedLang} setCode={setCode} code={code} />
             )}
           </div>
           <div>
