@@ -1,46 +1,43 @@
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import useGetSelectedProblem from "../hooks/useGetSelectedProblem";
+import { ReceiptText } from "lucide-react";
 
-const markdownText = `
-# Problem Statement
-Write a function that reverses a string. The input string is given as an array of characters \`s\`.  
-You must do this by modifying the input array **in-place** with **O(1)** extra memory.
 
-## Constraints
-- (1 ≤ s.length ≤ 10^5)
-- (s[i]) is a printable ASCII character
-- Input is a character array that can be modified in-place
-
-## Examples
-### Example 1
-**Input:**  
-s = ["h","e","l","l","o"]  
-**Output:**  
-["o","l","l","e","h"]
-
-### Example 2
-**Input:**  
-s = ["H","a","n","n","a","h"]  
-**Output:**  
-["h","a","n","n","a","H"]
-
-    
-    `;
 
 const MyReactMarkDown = () => {
+  const problem=useGetSelectedProblem()
+
   return (
-    <ReactMarkdown
-      rehypePlugins={[rehypeRaw]}
-      components={{
-        h1: ({ ...props }) => <h1 style={{ fontSize: "2em" }} {...props} />,
-        h2: ({ ...props }) => (
-          <h2 style={{ fontSize: "1.6em", fontWeight: "bold" }} {...props} />
-        ),
-        h3: ({ ...props }) => <h3 style={{ fontSize: "1.17em" }} {...props} />,
-      }}
-    >
-      {markdownText}
-    </ReactMarkdown>
+    <div className="bg-gray-900 text-white min-h-screen p-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-center space-x-1 items-center mb-4">
+        <div><ReceiptText size={25}/></div>
+        <div className="text-2xl  font-bold">{problem && problem.title}</div>
+        </div>
+        <div className=" mb-4">
+          <ReactMarkdown
+            rehypePlugins={[rehypeRaw]}
+            components={{
+              h1: ({ ...props }) => (
+                <h1 style={{ fontSize: "2em" }} {...props} />
+              ),
+              h2: ({ ...props }) => (
+                <h2
+                  style={{ fontSize: "1.6em", fontWeight: "bold" }}
+                  {...props}
+                />
+              ),
+              h3: ({ ...props }) => (
+                <h3 style={{ fontSize: "1.17em" }} {...props} />
+              ),
+            }}
+          >
+            {problem &&problem.description}
+          </ReactMarkdown>
+        </div>
+      </div>
+    </div>
   );
 };
 
