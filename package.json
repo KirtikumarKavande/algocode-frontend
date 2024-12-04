@@ -14,6 +14,8 @@
     "@types/dompurify": "^3.0.5",
     "ace-builds": "^1.36.5",
     "axios": "^1.7.8",
+    "dexie": "^4.0.10",
+    "dexie-react-hooks": "^1.1.7",
     "dompurify": "^3.2.2",
     "lucide-react": "^0.460.0",
     "react": "^18.3.1",
