@@ -9,6 +9,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';  // This is necessary for
 import 'ace-builds/src-noconflict/ext-beautify'; 
 import useGetSelectedProblem from "../hooks/useGetSelectedProblem";
 import { useEffect } from "react";
+import { db } from "../indexDb/problem-solution.db";
 
 
 const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: (value: string) => void, code:string }) => {
@@ -17,14 +18,35 @@ const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: 
   useEffect(()=>{
     if(codeStub){
       if(selectedLang==="c_cpp") selectedLang="cpp"
-      setCode(codeStub[selectedLang])
+     
+    db.userSolution.get(problem._id).then((existingEntry)=>{
+      if(existingEntry?.solutions[selectedLang]){
+        setCode(existingEntry.solutions[selectedLang])
+      }else{
+        setCode(codeStub[selectedLang])
+      }
+      console.log("existing entry",existingEntry)
+
+    })
+     
+      
     console.log("code stub",codeStub[selectedLang])
 
     }
   },[selectedLang,codeStub])
   console.log("code stub",codeStub)
 
-  function handleCodeChange(c: string) {
+  async function handleCodeChange(c: string) {
+    const existingEntry = await db.userSolution.get(problem._id);
+    const updatedSolutions = {
+      ...existingEntry?.solutions, // Retain existing solutions
+      [selectedLang]: c,    // Update the specific language code
+    };
+    await db.userSolution.put({
+      problemId: problem._id,
+      solutions: updatedSolutions,
+    });
+
     setCode(c);
   }
 
