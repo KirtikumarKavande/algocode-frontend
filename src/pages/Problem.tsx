@@ -46,6 +46,11 @@ const Problem = () => {
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (!isDragging) return;
+      if (dividerRef.current) {
+
+      dividerRef.current.classList.remove("bg-white");
+      dividerRef.current.classList.add("bg-blue-400");
+    }
 
       const mouseX = event.clientX;
       const viewportWidth = window.innerWidth;
@@ -59,13 +64,17 @@ const Problem = () => {
 
     const handleMouseUp = () => {
       if (dividerRef.current) {
-        dividerRef.current.classList.remove("bg-blue-700");
+      dividerRef.current.classList.add("bg-white");
+
+      dividerRef.current.classList.remove("bg-blue-400");
+
       }
 
       setIsDragging(false);
     };
 
     if (isDragging) {
+      document.body.style.userSelect = "none";
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
     }
@@ -78,9 +87,13 @@ const Problem = () => {
 
   function mouseDown() {
     setIsDragging(true);
-    if (dividerRef.current) {
-      dividerRef.current.style.setProperty("background-color", "blue");
-    }
+  
+  }
+
+  
+  function mouseUp() {
+    setIsDragging(false);
+   
   }
 
   function handleChangeLanguagesOption(lang: string) {
@@ -120,7 +133,7 @@ const Problem = () => {
       );
       console.log(response);
       setIsClickedOnSubmit(true);
-      setShowRightPanelBtn("testCase");
+      setShowRightPanelBtn("result");
       return response;
     } catch (error) {
       console.log(error);
@@ -160,6 +173,7 @@ const Problem = () => {
           ref={dividerRef}
           className="divider w-1 h-[95vh]  bg-white cursor-ew-resize flex justify-center"
           onMouseDown={mouseDown}
+          onMouseUp={mouseUp}
         />
 
         <div
@@ -210,7 +224,7 @@ const Problem = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className="w-max">
             {showRightPanelBtn === "code" && (
               <Editor
                 selectedLang={selectedLang}
@@ -220,7 +234,7 @@ const Problem = () => {
             )}
           </div>
           <div>
-            {showRightPanelBtn === "testCase" && (
+            {showRightPanelBtn === "result" && (
               <TestCase
                 testCaseResult={testCaseResult}
                 isClickedOnSubmit={isClickedOnSubmit}
