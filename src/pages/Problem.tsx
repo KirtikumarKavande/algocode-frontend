@@ -11,29 +11,35 @@ import socket from "../components/socket/socket";
 import axios from "axios";
 import Article from "../components/Article";
 import Solutions from "../components/Solutions";
+import { RotateCcw } from "lucide-react";
+import useGetSelectedProblem from "../hooks/useGetSelectedProblem";
+import { db } from "../indexDb/problem-solution.db";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
   const dividerRef = useRef<HTMLDivElement>(null);
   const [showLeftPanelBtn, setShowLeftPanelBtn] = useState("desc");
   const [showRightPanelBtn, setShowRightPanelBtn] = useState("code");
-  const [selectedLang, setSelectedLang] = useState(localStorage.getItem("selectedLang")||"c_cpp"); 
+  const [selectedLang, setSelectedLang] = useState(
+    localStorage.getItem("selectedLang") || "c_cpp"
+  );
   const [code, setCode] = useState("");
-  const [testCaseResult,setTestCaseResult]=useState({}) 
-  const[isClickedOnSubmit,setIsClickedOnSubmit]=useState(false)
+  const [testCaseResult, setTestCaseResult] = useState({});
+  const [isClickedOnSubmit, setIsClickedOnSubmit] = useState(false);
+  const resetTextHover = useRef<HTMLDivElement>(null);
+  const problemData = useGetSelectedProblem();
 
   useEffect(() => {
-      function testCaseResult(value:object) {
-        setIsClickedOnSubmit(false)
-        setTestCaseResult(value)
-     console.log("socket on frontend",value)
+    function testCaseResult(value: object) {
+      setIsClickedOnSubmit(false);
+      setTestCaseResult(value);
+      console.log("socket on frontend", value);
     }
 
-    socket.on('payload', testCaseResult);
+    socket.on("payload", testCaseResult);
 
     return () => {
-      
-      socket.off('payload', testCaseResult);
+      socket.off("payload", testCaseResult);
     };
   }, []);
 
@@ -73,36 +79,52 @@ const Problem = () => {
   function mouseDown() {
     setIsDragging(true);
     if (dividerRef.current) {
-      dividerRef.current.style.setProperty('background-color', 'blue', );
+      dividerRef.current.style.setProperty("background-color", "blue");
     }
   }
- 
+
   function handleChangeLanguagesOption(lang: string) {
     setSelectedLang(lang);
     localStorage.setItem("selectedLang", lang);
   }
 
+  async function resetSolution() {
+    const codeStub = problemData?.initialCodeStub;
+    setCode(codeStub[selectedLang]);
+    await db.userSolution.delete(problemData?._id);
+  }
+  function mouseEnterOnRestIcon() {
+    if (resetTextHover.current) {
+      resetTextHover.current.style.display = "block";
+    }
+  }
+  function mouseLeaveOnRestIcon() {
+    if (resetTextHover.current) {
+      resetTextHover.current.style.display = "none";
+    }
+  }
 
-
-  async function handleSubmitSubmission(){
+  async function handleSubmitSubmission() {
     socket.emit("redis-cache", { userId: "1" });
     try {
-      console.log(code)
-      console.log(selectedLang)
-      const response = await axios.post("http://localhost:5000/api/v1/submissions/addsubmissions", {
+      console.log(code);
+      console.log(selectedLang);
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/submissions/addsubmissions",
+        {
           code,
-          language:selectedLang,
+          language: selectedLang,
           userId: "1",
-          problemId: "661184c6a5f8943ad4d8c3c9"
-      });
+          problemId: "661184c6a5f8943ad4d8c3c9",
+        }
+      );
       console.log(response);
-      setIsClickedOnSubmit(true)
-      setShowRightPanelBtn("testCase")
+      setIsClickedOnSubmit(true);
+      setShowRightPanelBtn("testCase");
       return response;
-  } catch(error) {
+    } catch (error) {
       console.log(error);
-  }
-   
+    }
   }
   return (
     <div>
@@ -133,7 +155,6 @@ const Problem = () => {
           <div className="px-2">
             {showLeftPanelBtn === "solution" && <Solutions />}
           </div>
-
         </div>
         <div
           ref={dividerRef}
@@ -142,7 +163,11 @@ const Problem = () => {
         />
 
         <div
-          style={{ width: `${100 - currentWidth}%`, height: "100vh", overflowY:"scroll" }}
+          style={{
+            width: `${100 - currentWidth}%`,
+            height: "100vh",
+            overflowY: "scroll",
+          }}
           className="border rounded"
         >
           <div className="h-12 border-b-2  border-gray-700 flex items-center">
@@ -161,19 +186,45 @@ const Problem = () => {
                   btnArray={rightPannelButtonList}
                 />
               </div>
-              <div className="pr-4">
-                <button className="p-1 bg-green-500 text-white text-bold rounded" onClick={handleSubmitSubmission}>Submit</button>
+              <div className="pr-4 flex items-center space-x-3 relative">
+                <RotateCcw
+                  onMouseEnter={mouseEnterOnRestIcon}
+                  onMouseLeave={mouseLeaveOnRestIcon}
+                  size={20}
+                  onClick={resetSolution}
+                  className="cursor-pointer hover:text-gray-400 hover:rounded"
+                />
+                <div
+                  ref={resetTextHover}
+                  style={{ display: "none" }}
+                  className="absolute p-1 px-2 rounded-lg bg-gray-500 top-9 z-50 right-8 w-max"
+                >
+                  Reset to Original
+                </div>
+                <button
+                  className="p-1 bg-green-500 text-white text-bold rounded"
+                  onClick={handleSubmitSubmission}
+                >
+                  Submit
+                </button>
               </div>
             </div>
           </div>
           <div>
             {showRightPanelBtn === "code" && (
-              <Editor selectedLang={selectedLang} setCode={setCode} code={code} />
+              <Editor
+                selectedLang={selectedLang}
+                setCode={setCode}
+                code={code}
+              />
             )}
           </div>
           <div>
-          {showRightPanelBtn === "testCase" && (
-              <TestCase testCaseResult={testCaseResult} isClickedOnSubmit={isClickedOnSubmit} />
+            {showRightPanelBtn === "testCase" && (
+              <TestCase
+                testCaseResult={testCaseResult}
+                isClickedOnSubmit={isClickedOnSubmit}
+              />
             )}
           </div>
         </div>
