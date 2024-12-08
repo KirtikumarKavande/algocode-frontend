@@ -28,7 +28,7 @@ const Problem = () => {
   const [isClickedOnSubmit, setIsClickedOnSubmit] = useState(false);
   const resetTextHover = useRef<HTMLDivElement>(null);
   const problemData = useGetSelectedProblem();
-
+console.log("showRightPanelBtn",showRightPanelBtn)
   useEffect(() => {
     function testCaseResult(value: object) {
       setIsClickedOnSubmit(false);
@@ -102,6 +102,7 @@ const Problem = () => {
   }
 
   async function resetSolution() {
+    console.log("logged")
     const codeStub = problemData?.initialCodeStub;
     setCode(codeStub[selectedLang]);
     await db.userSolution.delete(problemData?._id);
@@ -224,7 +225,7 @@ const Problem = () => {
               </div>
             </div>
           </div>
-          <div className="w-max">
+          <div >
             {showRightPanelBtn === "code" && (
               <Editor
                 selectedLang={selectedLang}

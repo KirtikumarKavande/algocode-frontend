@@ -65,7 +65,7 @@ const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: 
   console.log("lang selected",selectedLang);
 
   return (
-    <div>
+    <div className="w-full overflow-x-auto"> 
       {" "}
       <AceEditor
         mode={"c_cpp"}
