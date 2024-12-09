@@ -32,7 +32,7 @@ const TestCase = ({
         index = (index + 1) % texts.length;
         loadingText.current.textContent = texts[index];
       }
-    }, 1500);
+    }, 2000);
 
     return () => {
       clearInterval(id);
@@ -65,7 +65,7 @@ const TestCase = ({
 
   const { status, error, results, totalTestCases, passedTestCases } =
     testCaseResult.testCaseResult;
-
+console.log("results",results)
   if (status === "failed" && error) {
     return (
       <div className="p-6 space-y-4">
@@ -121,7 +121,7 @@ const TestCase = ({
                 <div className="flex items-center space-x-2 text-gray-600">
                   <Clock className="w-4 h-4" />
                   <span className="text-sm">
-                    {result.executionTime.toFixed(2)}s
+                    {result?.executionTime?.toFixed(2)}s
                   </span>
                 </div>
               </div>
@@ -155,7 +155,7 @@ const TestCase = ({
                       result.passed ? "bg-gray-50 " : "bg-red-200 "
                     }`}
                   >
-                    {result.actualOutput || result?.error}
+                    {(!Array.isArray(result.actualOutput )?result.actualOutput:JSON.stringify(result.actualOutput)) || result?.error}
                   </div>
                 </div>
               </div>

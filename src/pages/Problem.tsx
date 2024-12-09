@@ -129,7 +129,7 @@ console.log("showRightPanelBtn",showRightPanelBtn)
           code,
           language: selectedLang,
           userId: "1",
-          problemId: "661184c6a5f8943ad4d8c3c9",
+          problemId: problemData?._id,
         }
       );
       console.log(response);
@@ -217,7 +217,7 @@ console.log("showRightPanelBtn",showRightPanelBtn)
                   Reset to Original
                 </div>
                 <button
-                  className="p-1 bg-green-500 text-white text-bold rounded"
+                  className="p-1 bg-[#1E6BFF] text-white text-bold rounded"
                   onClick={handleSubmitSubmission}
                 >
                   Submit
