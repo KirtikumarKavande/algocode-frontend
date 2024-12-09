@@ -28,12 +28,12 @@ const ProblemList = ({ closeDrawer }: { closeDrawer: () => void }) => {
     closeDrawer();
   }
   return (
-    <ul className="menu p-4 w-[500px] min-h-full bg-gray-800 text-white space-y-2">
+    <ul className=" menu p-4 w-[500px] min-h-full bg-gray-800 text-white space-y-2">
       {problemLinks &&
-        problemLinks.map((problem: Problem, index) => (
+        problemLinks.map((problem: Problem, index:any) => (
           <li
             key={problem._id}
-            className={`group border-b border-gray-200 hover:bg-gray-800 pb-2 transition-colors duration-300 ease-in-out ${
+            className={` group border-b border-gray-200 hover:bg-gray-800 pb-2 transition-colors duration-300 ease-in-out ${
               problem?._id === selectedProblemData?._id
                 ? "bg-gray-700 rounded-lg"
                 : !selectedProblemData && index === 0

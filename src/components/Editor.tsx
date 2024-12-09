@@ -1,5 +1,4 @@
 import AceEditor from "react-ace";
-import { Editor as IAceEditor } from '@types/ace';
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-java";
@@ -11,7 +10,10 @@ import useGetSelectedProblem from "../hooks/useGetSelectedProblem";
 import { useEffect } from "react";
 import { db } from "../indexDb/problem-solution.db";
 
+import { config } from "ace-builds";
 
+// Set the base path for workers
+config.set("basePath", "/node_modules/ace-builds/src-noconflict");
 const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: (value: string) => void, code:string }) => {
   const problem=useGetSelectedProblem()
   const codeStub=problem?.initialCodeStub
@@ -52,7 +54,7 @@ const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: 
 
   
 
-  const onLoad = (editor:IAceEditor) => {
+  const onLoad = (editor:any) => {
 
     editor.setOptions({
       enableBasicAutocompletion: true,  // Enable basic auto completion
@@ -68,7 +70,7 @@ const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: 
     <div className="w-full overflow-x-auto"> 
       {" "}
       <AceEditor
-        mode={"c_cpp"}
+        mode={selectedLang}
         theme="monokai"
         width="100%"
         onChange={handleCodeChange}

@@ -72,8 +72,8 @@ const SolutionTab = () => {
       </div>
 
       {/* Code Display Area */}
-      <div className="relative">
-        <pre className="bg-gray-800 pl-12 py-1 rounded-lg overflow-auto max-h-[500px] text-sm font-mono">
+      <div className="relative z-10 ">
+        <pre className=" bg-gray-800 pl-12 py-1 rounded-lg overflow-auto max-h-[500px] text-sm font-mono ">
           <code className={`language-${activeLanguage}`}>
             {solution &&solution[activeLanguage]}
           </code>
