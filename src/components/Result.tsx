@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { result, testCaseResult } from "../types/testCase.types";
 
-const TestCase = ({
+const Result = ({
   testCaseResult,
   isClickedOnSubmit,
 }: {
@@ -167,4 +167,4 @@ console.log("results",results)
   );
 };
 
-export default TestCase;
+export default Result;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProblemHeader from "../components/headers/ProblemHeader";
 import Editor from "../components/Editor";
-import TestCase from "../components/TestCase";
 import SelectBox from "../components/SelectBox";
 import { programmingLanguage } from "../utilities/constansts";
 import ReactMarkDown from "../components/MyMarkDown";
@@ -14,6 +13,7 @@ import Solutions from "../components/Solutions";
 import { RotateCcw } from "lucide-react";
 import useGetSelectedProblem from "../hooks/useGetSelectedProblem";
 import { db } from "../indexDb/problem-solution.db";
+import Result from "../components/Result";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
@@ -236,7 +236,7 @@ console.log("showRightPanelBtn",showRightPanelBtn)
           </div>
           <div>
             {showRightPanelBtn === "result" && (
-              <TestCase
+              <Result
                 testCaseResult={testCaseResult}
                 isClickedOnSubmit={isClickedOnSubmit}
               />
