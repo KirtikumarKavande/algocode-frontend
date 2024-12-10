@@ -28,7 +28,8 @@ const Problem = () => {
   const [isClickedOnSubmit, setIsClickedOnSubmit] = useState(false);
   const resetTextHover = useRef<HTMLDivElement>(null);
   const problemData = useGetSelectedProblem();
-console.log("showRightPanelBtn",showRightPanelBtn)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  console.log("showRightPanelBtn", showRightPanelBtn);
   useEffect(() => {
     function testCaseResult(value: object) {
       setIsClickedOnSubmit(false);
@@ -42,18 +43,17 @@ console.log("showRightPanelBtn",showRightPanelBtn)
       socket.off("payload", testCaseResult);
     };
   }, []);
-    useEffect(() => {
-      setTestCaseResult({})
-      setShowRightPanelBtn("code")
-    },[problemData?._id])
+  useEffect(() => {
+    setTestCaseResult({});
+    setShowRightPanelBtn("code");
+  }, [problemData?._id]);
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (!isDragging) return;
       if (dividerRef.current) {
-
-      dividerRef.current.classList.remove("bg-white");
-      dividerRef.current.classList.add("bg-blue-400");
-    }
+        dividerRef.current.classList.remove("bg-white");
+        dividerRef.current.classList.add("bg-blue-400");
+      }
 
       const mouseX = event.clientX;
       const viewportWidth = window.innerWidth;
@@ -67,10 +67,9 @@ console.log("showRightPanelBtn",showRightPanelBtn)
 
     const handleMouseUp = () => {
       if (dividerRef.current) {
-      dividerRef.current.classList.add("bg-white");
+        dividerRef.current.classList.add("bg-white");
 
-      dividerRef.current.classList.remove("bg-blue-400");
-
+        dividerRef.current.classList.remove("bg-blue-400");
       }
 
       setIsDragging(false);
@@ -90,13 +89,10 @@ console.log("showRightPanelBtn",showRightPanelBtn)
 
   function mouseDown() {
     setIsDragging(true);
-  
   }
 
-  
   function mouseUp() {
     setIsDragging(false);
-   
   }
 
   function handleChangeLanguagesOption(lang: string) {
@@ -105,7 +101,7 @@ console.log("showRightPanelBtn",showRightPanelBtn)
   }
 
   async function resetSolution() {
-    console.log("logged")
+    console.log("logged");
     const codeStub = problemData?.initialCodeStub;
     setCode(codeStub[selectedLang]);
     await db.userSolution.delete(problemData?._id);
@@ -143,13 +139,20 @@ console.log("showRightPanelBtn",showRightPanelBtn)
       console.log(error);
     }
   }
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      console.log("window width", window.innerWidth);
+      setWindowWidth(window.innerWidth);
+    });
+  }, []);
+
   return (
     <div>
       <ProblemHeader />
-      <div className="w-full flex overflow-hidden p-1">
+      <div className="w-full flex flex-col lg:flex-row overflow-hidden p-1">
         <div
           style={{
-            width: `${currentWidth}%`,
+            width: windowWidth >= 1024 ? `${currentWidth}%` : "100%",
             height: "100vh",
             overflow: "scroll",
           }}
@@ -175,21 +178,21 @@ console.log("showRightPanelBtn",showRightPanelBtn)
         </div>
         <div
           ref={dividerRef}
-          className="divider w-1 h-[95vh]  bg-white cursor-ew-resize flex justify-center"
+          className="divider hidden lg:block w-1 h-[95vh]  bg-white cursor-ew-resize  justify-center"
           onMouseDown={mouseDown}
           onMouseUp={mouseUp}
         />
 
         <div
           style={{
-            width: `${100 - currentWidth}%`,
+            width: windowWidth >= 1024 ? `${100 - currentWidth}%` : "100%",
             height: "100vh",
             overflowY: "scroll",
           }}
           className="border rounded"
         >
           <div className="h-12 border-b-2  border-gray-700 flex items-center">
-            <div className="px-3 ">
+            <div className=" px-1 md:px-3 ">
               <SelectBox
                 programmingLanguage={programmingLanguage}
                 handleChangeLanguagesOption={handleChangeLanguagesOption}
@@ -204,7 +207,7 @@ console.log("showRightPanelBtn",showRightPanelBtn)
                   btnArray={rightPannelButtonList}
                 />
               </div>
-              <div className="pr-4 flex items-center space-x-3 relative">
+              <div className="pr-2 md:pr-4 flex items-center space-x-3 relative">
                 <RotateCcw
                   onMouseEnter={mouseEnterOnRestIcon}
                   onMouseLeave={mouseLeaveOnRestIcon}
@@ -215,7 +218,7 @@ console.log("showRightPanelBtn",showRightPanelBtn)
                 <div
                   ref={resetTextHover}
                   style={{ display: "none" }}
-                  className="absolute p-1 px-2 rounded-lg bg-gray-500 top-9 z-50 right-8 w-max"
+                  className="absolute p-1 px-1 md:px-2 rounded-lg bg-gray-500 top-9 z-50 right-8 w-max"
                 >
                   Reset to Original
                 </div>
@@ -228,7 +231,7 @@ console.log("showRightPanelBtn",showRightPanelBtn)
               </div>
             </div>
           </div>
-          <div >
+          <div>
             {showRightPanelBtn === "code" && (
               <Editor
                 selectedLang={selectedLang}

@@ -37,7 +37,7 @@ const SolutionTab = () => {
   };
 
   return (
-    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-2xl max-w-4xl mx-auto">
+    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-2xl max-w-4xl mx-auto min-h-screen">
       {/* Header with Language Tabs */}
       <div className="flex border-b border-gray-700 mb-4 pb-2">
         {languages.map((lang) => (

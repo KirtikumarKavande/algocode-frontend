@@ -13,7 +13,7 @@ const ButtonList = ({
     setShowButton(item);
   }
   return (
-    <div className="h-12  flex items-center    px-3">
+    <div className="h-12  flex items-center px-0  md:px-3">
       {btnArray.map((item) => (
         <button
           className={`mr-1 flex space-x-1  rounded-md p-1`}
