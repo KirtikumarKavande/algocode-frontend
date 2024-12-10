@@ -42,7 +42,10 @@ console.log("showRightPanelBtn",showRightPanelBtn)
       socket.off("payload", testCaseResult);
     };
   }, []);
-
+    useEffect(() => {
+      setTestCaseResult({})
+      setShowRightPanelBtn("code")
+    },[problemData?._id])
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       if (!isDragging) return;
