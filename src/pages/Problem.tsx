@@ -123,7 +123,7 @@ const Problem = () => {
       console.log(code);
       console.log(selectedLang);
       const response = await axios.post(
-        "http://localhost:5000/api/v1/submissions/addsubmissions",
+        `${import.meta.env.VITE_SUBMISSION_SERVICE_URL}/v1/submissions/addsubmissions`,
         {
           code,
           language: selectedLang,
@@ -243,7 +243,7 @@ const Problem = () => {
           <div>
             {showRightPanelBtn === "result" && (
               <Result
-                testCaseResult={testCaseResult}
+                testCaseResult={testCaseResult as { testCaseResult: testCaseResult }}
                 isClickedOnSubmit={isClickedOnSubmit}
               />
             )}

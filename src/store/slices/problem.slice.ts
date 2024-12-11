@@ -27,7 +27,7 @@ export const fetchUsers = createAsyncThunk<Problems[], void, { rejectValue: stri
   'user/fetchUsers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5500/api/v1/problems');
+      const response = await axios.get(`${import.meta.env.VITE_PROBLEM_SERVICE_URL}/v1/problems`);
       console.log("response",response)
       return response.data;
     } catch (error: any) {
