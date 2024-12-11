@@ -243,7 +243,7 @@ const Problem = () => {
           <div>
             {showRightPanelBtn === "result" && (
               <Result
-                testCaseResult={testCaseResult as { testCaseResult: testCaseResult }}
+                testCaseResult={testCaseResult}
                 isClickedOnSubmit={isClickedOnSubmit}
               />
             )}
