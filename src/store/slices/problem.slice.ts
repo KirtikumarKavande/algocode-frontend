@@ -28,7 +28,6 @@ export const fetchUsers = createAsyncThunk<Problems[], void, { rejectValue: stri
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_PROBLEM_SERVICE_URL}/v1/problems`);
-      console.log("response",response)
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data || 'Failed to fetch users');

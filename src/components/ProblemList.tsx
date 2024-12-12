@@ -15,7 +15,6 @@ const ProblemList = ({ closeDrawer }: { closeDrawer: () => void }) => {
   const problemLinks = problems?.data;
   const dispatch = useDispatch();
   const selectedProblemData = useGetSelectedProblem();
-  console.log("problems", selectedProblemData);
   const difficultyChips: { [key: string]: string } = {
     Easy: "bg-green-100 text-green-800",
     Medium: "bg-yellow-100 text-yellow-800",
@@ -23,7 +22,6 @@ const ProblemList = ({ closeDrawer }: { closeDrawer: () => void }) => {
   };
 
   function selectedProblem(id: string) {
-    console.log("reached here");
     dispatch(getSelectedProblemId(id));
     closeDrawer();
   }

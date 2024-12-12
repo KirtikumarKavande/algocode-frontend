@@ -27,16 +27,13 @@ const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: 
       }else{
         setCode(codeStub[selectedLang])
       }
-      console.log("existing entry",existingEntry)
 
     })
      
       
-    console.log("code stub",codeStub[selectedLang])
 
     }
   },[selectedLang,codeStub])
-  console.log("code stub",codeStub)
 
   async function handleCodeChange(c: string) {
     const existingEntry = await db.userSolution.get(problem._id);
@@ -64,7 +61,6 @@ const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: 
       tabSize: 2,
     });
   };
-  console.log("lang selected",selectedLang);
 
   return (
     <div className="w-full overflow-x-auto"> 

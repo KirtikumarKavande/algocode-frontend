@@ -29,12 +29,10 @@ const Problem = () => {
   const resetTextHover = useRef<HTMLDivElement>(null);
   const problemData = useGetSelectedProblem();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  console.log("showRightPanelBtn", showRightPanelBtn);
   useEffect(() => {
     function testCaseResult(value: object) {
       setIsClickedOnSubmit(false);
       setTestCaseResult(value);
-      console.log("socket on frontend", value);
     }
 
     socket.on("payload", testCaseResult);
@@ -58,7 +56,6 @@ const Problem = () => {
       const mouseX = event.clientX;
       const viewportWidth = window.innerWidth;
       const mouseXPercentage = (mouseX / viewportWidth) * 100;
-      console.log(mouseXPercentage);
       if (mouseXPercentage < 10 && mouseXPercentage > 90) {
         return;
       }
@@ -101,7 +98,6 @@ const Problem = () => {
   }
 
   async function resetSolution() {
-    console.log("logged");
     const codeStub = problemData?.initialCodeStub;
     setCode(codeStub[selectedLang]);
     await db.userSolution.delete(problemData?._id);
@@ -120,8 +116,6 @@ const Problem = () => {
   async function handleSubmitSubmission() {
     socket.emit("redis-cache", { userId: "1" });
     try {
-      console.log(code);
-      console.log(selectedLang);
       const response = await axios.post(
         `${import.meta.env.VITE_SUBMISSION_SERVICE_URL}/v1/submissions/addsubmissions`,
         {
@@ -131,7 +125,6 @@ const Problem = () => {
           problemId: problemData?._id,
         }
       );
-      console.log(response);
       setIsClickedOnSubmit(true);
       setShowRightPanelBtn("result");
       return response;
@@ -141,7 +134,6 @@ const Problem = () => {
   }
   useEffect(() => {
     window.addEventListener("resize", () => {
-      console.log("window width", window.innerWidth);
       setWindowWidth(window.innerWidth);
     });
   }, []);

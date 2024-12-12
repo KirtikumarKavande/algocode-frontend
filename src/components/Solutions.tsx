@@ -6,7 +6,6 @@ import { languages } from "../pages/utilities/constants";
 
 const SolutionTab = () => {
   const problem = useGetSelectedProblem();
-  console.log("inside solution", problem);
   const [solution,setSolution] = useState<any>(null);
 
   async function getSolutionById(id:string) {
@@ -16,7 +15,6 @@ const SolutionTab = () => {
       }`
     );
     setSolution(res?.data.data.solution)
-    console.log("my solution",res?.data.data.solution);
   }
   useEffect(() => {
     if (problem && problem._id) {

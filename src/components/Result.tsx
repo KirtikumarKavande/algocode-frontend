@@ -65,7 +65,6 @@ const Result = ({
 
   const { status, error, results, totalTestCases, passedTestCases } =
     testCaseResult.testCaseResult;
-console.log("results",results)
   if (status === "failed" && error) {
     return (
       <div className="p-6 space-y-4">
