@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import ProblemHeader from "../components/headers/ProblemHeader";
 import Editor from "../components/Editor";
 import SelectBox from "../components/SelectBox";

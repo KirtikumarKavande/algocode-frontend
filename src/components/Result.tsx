@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   CheckCircle,
   XCircle,
@@ -6,13 +6,13 @@ import {
   AlertCircle,
   Loader2,
 } from "lucide-react";
-import { result, testCaseResult } from "../types/testCase.types";
+import { result } from "../types/testCase.types";
 
 const Result = ({
   testCaseResult,
   isClickedOnSubmit,
 }: {
-  testCaseResult: {testCaseResult: testCaseResult};
+  testCaseResult: any;
   isClickedOnSubmit: boolean;
 }) => {
   const loadingText = useRef<HTMLParagraphElement | null>(null);

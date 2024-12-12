@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import ProblemList from "../ProblemList";
-import { Pencil, Target } from "lucide-react";
 
 const ProblemHeader = () => {
   const drawerCheckboxRef = useRef<HTMLInputElement>(null);
