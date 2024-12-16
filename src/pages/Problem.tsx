@@ -10,10 +10,11 @@ import socket from "../components/socket/socket";
 import axios from "axios";
 import Article from "../components/Article";
 import Solutions from "../components/Solutions";
-import { RotateCcw } from "lucide-react";
+import { Loader2, RotateCcw } from "lucide-react";
 import useGetSelectedProblem from "../hooks/useGetSelectedProblem";
 import { db } from "../indexDb/problem-solution.db";
 import Result from "../components/Result";
+import { toast } from "react-toastify";
 const Problem = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [currentWidth, setCurrentWidth] = useState(50);
@@ -116,8 +117,14 @@ const Problem = () => {
   async function handleSubmitSubmission() {
     socket.emit("redis-cache", { userId: "1" });
     try {
+      if (selectedLang != "javascript") {
+        toast.error("Apologies! Currently, we only support JavaScript.");
+        return;
+      }
       const response = await axios.post(
-        `${import.meta.env.VITE_SUBMISSION_SERVICE_URL}/v1/submissions/addsubmissions`,
+        `${
+          import.meta.env.VITE_SUBMISSION_SERVICE_URL
+        }/v1/submissions/addsubmissions`,
         {
           code,
           language: selectedLang,
@@ -141,11 +148,11 @@ const Problem = () => {
   return (
     <div>
       <ProblemHeader />
-      <div className="w-full flex flex-col lg:flex-row overflow-hidden p-1">
+      <div className="w-full flex flex-col lg:flex-row overflow-hidden p-1 ">
         <div
           style={{
             width: windowWidth >= 1024 ? `${currentWidth}%` : "100%",
-            height: "100vh",
+            height: "calc(100vh - 70px)",
             overflow: "scroll",
           }}
           className="border rounded max-w-full overflow-auto "
@@ -157,20 +164,33 @@ const Problem = () => {
               btnArray={leftPanelBtnList}
             />
           </div>
-
-          <div className="  px-2">
-            {showLeftPanelBtn === "desc" && <ReactMarkDown />}
-          </div>
-          <div className="px-2">
-            {showLeftPanelBtn === "article" && <Article />}
-          </div>
-          <div className="px-2">
-            {showLeftPanelBtn === "solution" && <Solutions />}
-          </div>
+          {!problemData ? (
+            <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] space-y-4 ">
+              <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+              <p
+                className="text-lg text-gray-600 animate-pulse"
+                id="loadingText"
+              >
+                Getting Problem For You...
+              </p>
+            </div>
+          ) : (
+            <div>
+              <div className="  px-2">
+                {showLeftPanelBtn === "desc" && <ReactMarkDown />}
+              </div>
+              <div className="px-2">
+                {showLeftPanelBtn === "article" && <Article />}
+              </div>
+              <div className="px-2">
+                {showLeftPanelBtn === "solution" && <Solutions />}
+              </div>
+            </div>
+          )}
         </div>
         <div
           ref={dividerRef}
-          className="divider hidden lg:block w-1 h-[95vh]  bg-white cursor-ew-resize  justify-center"
+          className="divider hidden lg:block w-1 h-[85vh]  bg-white cursor-ew-resize  justify-center"
           onMouseDown={mouseDown}
           onMouseUp={mouseUp}
         />
@@ -178,7 +198,7 @@ const Problem = () => {
         <div
           style={{
             width: windowWidth >= 1024 ? `${100 - currentWidth}%` : "100%",
-            height: "100vh",
+            height: "calc(100vh - 70px)",
             overflowY: "scroll",
           }}
           className="border rounded"
@@ -199,6 +219,7 @@ const Problem = () => {
                   btnArray={rightPannelButtonList}
                 />
               </div>
+
               <div className="pr-2 md:pr-4 flex items-center space-x-3 relative">
                 <RotateCcw
                   onMouseEnter={mouseEnterOnRestIcon}
@@ -207,6 +228,7 @@ const Problem = () => {
                   onClick={resetSolution}
                   className="cursor-pointer hover:text-gray-400 hover:rounded"
                 />
+
                 <div
                   ref={resetTextHover}
                   style={{ display: "none" }}
