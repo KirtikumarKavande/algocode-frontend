@@ -22,7 +22,7 @@ const Problem = () => {
   const [showLeftPanelBtn, setShowLeftPanelBtn] = useState("desc");
   const [showRightPanelBtn, setShowRightPanelBtn] = useState("code");
   const [selectedLang, setSelectedLang] = useState(
-    localStorage.getItem("selectedLang") || "c_cpp"
+    localStorage.getItem("selectedLang") || "javascript"
   );
   const [code, setCode] = useState("");
   const [testCaseResult, setTestCaseResult] = useState({});

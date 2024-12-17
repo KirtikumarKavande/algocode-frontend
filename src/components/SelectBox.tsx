@@ -15,15 +15,19 @@ const SelectBox = ({
         className="select select-bordered select-xs h-8 max-w-xs"
         onChange={(e) => handleChangeLanguagesOption(e.target.value)}
       >
-        {programmingLanguage.map((lang) => (
+        {programmingLanguage.map((lang) => {
+          console.log("cool",lang)
+          return(
+          
           <option
-            selected={localStorage.getItem("selectedLang")===lang.value ||lang.value === "javascript"}
+            selected={lang.value==="javascript" }
             key={lang.name}
             value={lang.value}
           >
+
             {lang.name}
           </option>
-        ))}
+        )})}
       </select>
     </div>
   );

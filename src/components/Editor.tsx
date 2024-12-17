@@ -15,6 +15,7 @@ import { config } from "ace-builds";
 // Set the base path for workers
 config.set("basePath", "/node_modules/ace-builds/src-noconflict");
 const Editor = ({ selectedLang,setCode,code }: { selectedLang: string, setCode: (value: string) => void, code:string }) => {
+  console.log("selectedLang",selectedLang)
   const problem=useGetSelectedProblem()
   const codeStub=problem?.initialCodeStub
   useEffect(()=>{
