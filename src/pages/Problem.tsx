@@ -121,6 +121,8 @@ const Problem = () => {
         toast.error("Apologies! Currently, we only support JavaScript.");
         return;
       }
+      setIsClickedOnSubmit(true);
+      setShowRightPanelBtn("result");
       const response = await axios.post(
         `${
           import.meta.env.VITE_SUBMISSION_SERVICE_URL
@@ -132,8 +134,7 @@ const Problem = () => {
           problemId: problemData?._id,
         }
       );
-      setIsClickedOnSubmit(true);
-      setShowRightPanelBtn("result");
+    
       return response;
     } catch (error) {
       console.log(error);
